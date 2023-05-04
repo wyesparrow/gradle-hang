@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+}
+
+ext {
+    vertxVersion = '4.4.1'
+    restAssuredVersion = '5.3.0'
+    assertjVersion = '3.24.2'
+    hazelcastVersion = '5.2.3'
+    jmockitVersion = '1.49'
+
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.vertx:vertx-rx-java3:4.4.1'
+    implementation 'io.vertx:vertx-web-client:4.4.1'
+    implementation 'io.vertx:vertx-web:4.4.1'
+
+    testImplementation "org.jmockit:jmockit:$jmockitVersion"
+    testImplementation "io.vertx:vertx-junit5-rx-java3:$vertxVersion"
+    testImplementation "io.rest-assured:rest-assured:$restAssuredVersion"
+    testImplementation "org.assertj:assertj-core:$assertjVersion"
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+    jvmArgs "-javaagent:${classpath.find { it.name.contains("jmockit") }.absolutePath}"
+}
